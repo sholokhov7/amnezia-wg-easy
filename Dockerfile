@@ -37,7 +37,7 @@ RUN apk add --no-cache \
     iptables \
     nodejs \
     npm \
-    wireguard
+    wireguard-tools
 
 # Use iptables-legacy
 RUN update-alternatives --install /sbin/iptables iptables /sbin/iptables-legacy 10 --slave /sbin/iptables-restore iptables-restore /sbin/iptables-legacy-restore --slave /sbin/iptables-save iptables-save /sbin/iptables-legacy-save
