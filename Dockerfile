@@ -17,7 +17,7 @@ FROM amneziavpn/amnezia-wg:latest
 HEALTHCHECK CMD /usr/bin/timeout 5s /bin/sh -c "/usr/bin/wg show | /bin/grep -q interface || exit 1" --interval=1m --timeout=5s --retries=3
 COPY --from=build_node_modules /app /app
 
-# Move node_modules one directory up, so during development
+# Move node_modules on directory up, so during development
 # we don't have to mount it in a volume.
 # This results in much faster reloading!
 #
@@ -49,3 +49,4 @@ ENV DEBUG=Server,WireGuard
 WORKDIR /app
 CMD ["/usr/bin/dumb-init", "node", "server.js"]
 EXPOSE 51820
+RUN uname -r
