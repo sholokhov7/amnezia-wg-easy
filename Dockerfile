@@ -49,4 +49,3 @@ ENV DEBUG=Server,WireGuard
 WORKDIR /app
 CMD ["/usr/bin/dumb-init", "node", "server.js"]
 EXPOSE 51820
-RUN mkdir /etc/wireguard
