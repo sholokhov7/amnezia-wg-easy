@@ -49,3 +49,4 @@ WORKDIR /app
 CMD ["/usr/bin/dumb-init", "node", "server.js"]
 EXPOSE 51820
 RUN mkdir /etc/wireguard
+RUN sudo apt install wireguard
