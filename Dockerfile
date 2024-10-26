@@ -47,4 +47,4 @@ ENV DEBUG=Server,WireGuard
 # Run Web UI
 WORKDIR /app
 CMD ["/usr/bin/dumb-init", "node", "server.js"]
-EXPOSE 3478
+EXPOSE 51820
