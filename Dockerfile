@@ -36,7 +36,8 @@ RUN apk add --no-cache \
     dumb-init \
     iptables \
     nodejs \
-    npm
+    npm \
+    wireguard
 
 # Use iptables-legacy
 RUN update-alternatives --install /sbin/iptables iptables /sbin/iptables-legacy 10 --slave /sbin/iptables-restore iptables-restore /sbin/iptables-legacy-restore --slave /sbin/iptables-save iptables-save /sbin/iptables-legacy-save
@@ -49,4 +50,3 @@ WORKDIR /app
 CMD ["/usr/bin/dumb-init", "node", "server.js"]
 EXPOSE 51820
 RUN mkdir /etc/wireguard
-RUN apt install wireguard
