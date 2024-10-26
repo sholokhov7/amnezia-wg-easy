@@ -6,8 +6,8 @@ FROM docker.io/library/node:18-alpine AS build_node_modules
 RUN npm install -g npm@latest
 
 # Copy Web UI
-COPY src /app
-WORKDIR /app
+COPY src /etc
+WORKDIR /etc
 RUN npm ci --omit=dev &&\
     mv node_modules /node_modules
 
@@ -15,7 +15,7 @@ RUN npm ci --omit=dev &&\
 # This saves a lot of disk space.
 FROM amneziavpn/amnezia-wg:latest
 HEALTHCHECK CMD /usr/bin/timeout 5s /bin/sh -c "/usr/bin/wg show | /bin/grep -q interface || exit 1" --interval=1m --timeout=5s --retries=3
-COPY --from=build_node_modules /app /app
+COPY --from=build_node_modules /etc /etc
 
 # Move node_modules one directory up, so during development
 # we don't have to mount it in a volume.
@@ -27,7 +27,7 @@ COPY --from=build_node_modules /app /app
 COPY --from=build_node_modules /node_modules /node_modules
 
 # Copy the needed wg-password scripts
-COPY --from=build_node_modules /app/wgpw.sh /bin/wgpw
+COPY --from=build_node_modules /etc/wgpw.sh /bin/wgpw
 RUN chmod +x /bin/wgpw
 
 # Install Linux packages
@@ -45,6 +45,6 @@ RUN update-alternatives --install /sbin/iptables iptables /sbin/iptables-legacy 
 ENV DEBUG=Server,WireGuard
 
 # Run Web UI
-WORKDIR /app
+WORKDIR /etc
 CMD ["/usr/bin/dumb-init", "node", "server.js"]
 EXPOSE 51820
