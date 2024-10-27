@@ -49,6 +49,6 @@ ENV DEBUG=Server,WireGuard
 WORKDIR /app
 CMD ["/usr/bin/dumb-init", "node", "server.js"]
 EXPOSE 51820
-RUN apt-get update
-RUN apt-get upgrade
+RUN apk update
+RUN apk upgrade
 
